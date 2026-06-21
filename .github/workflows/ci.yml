@@ -1,0 +1,58 @@
+# =============================================================================
+#  STUDENT STARTER WORKFLOW
+#
+#  This file runs as-is: it builds the project and runs the tests on every push
+#  to `main`. Your job is to grow it into a real CI/CD pipeline by completing
+#  the TODOs below. Each TODO maps to a numbered task in ASSIGNMENT.md.
+#
+#  Tip: commit small and often. Watch the "Actions" tab after each push.
+# =============================================================================
+
+name: CI
+
+# TODO (Task 1): This workflow only triggers on pushes to `main`. Add a trigger
+# so it ALSO runs on pull requests targeting `main`. CI that doesn't run on PRs
+# can't protect the main branch.
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          # TODO (Task 2): Enable built-in Maven dependency caching here so the
+          # job doesn't re-download the world on every run. (Hint: setup-java
+          # supports a `cache:` input.)
+
+      - name: Build and run tests
+        run: mvn -B verify
+
+      # TODO (Task 3): Publish the JUnit test results so reviewers can see which
+      # tests ran (and which failed) without digging through logs. Upload
+      # target/surefire-reports as a build artifact. Make sure this step still
+      # runs even when the tests fail (Hint: `if: always()`).
+
+      # TODO (Task 4): Enforce a code-coverage gate. Uncomment the JaCoCo
+      # "coverage-check" execution in pom.xml, then confirm `mvn verify` fails
+      # when coverage is below the threshold. (Try deleting a test to see it
+      # break, then restore it.)
+
+  # TODO (Task 5): Add a SEPARATE job called `lint` that runs Checkstyle with
+  # `mvn -B checkstyle:check`. Keeping lint in its own job means style problems
+  # and test failures show up as distinct signals.
+
+  # TODO (Task 6 - CD): Add a `docker` job that builds the image from the
+  # provided Dockerfile and pushes it to the Dockerhub registry. Use the `docker/build-push-action` action. You'll need to
+  # log in to Dockerhub first (see the action's docs). Use the `needs:` keyword to make this job depend on the previous two jobs, so it only runs if they pass
+  # — but ONLY on pushes to `main`, and only AFTER build-and-test and lint pass.
+  # See INSTRUCTOR_NOTES.md / the GH docs for the `needs:`, `if:`, and
+  # `permissions: packages: write` pieces you'll need.
