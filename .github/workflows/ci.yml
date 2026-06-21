@@ -5,7 +5,7 @@
 #  to `main`. Your job is to grow it into a real CI/CD pipeline by completing
 #  the TODOs below. Each TODO maps to a numbered task in ASSIGNMENT.md.
 #
-#  Tip: commit small and often. Watch the "Actions" tab after each push.
+#  Tip: commit small and often. Watch the "Actions" tab after each push..
 # =============================================================================
 
 name: CI
