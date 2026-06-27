@@ -65,7 +65,17 @@ jobs:
       # TODO (Task 5): Add a SEPARATE job called `lint` that runs Checkstyle with
       # `mvn -B checkstyle:check`. Keeping lint in its own job means style problems
       # and test failures show up as distinct signals.
-         lint:
+      - name: lint test and Run Checkstyle
+        run: mvn -B checkstyle:check
+  # TODO (Task 6 - CD): Add a `docker` job that builds the image from the
+  # provided Dockerfile and pushes it to the Dockerhub registry. Use the `docker/build-push-action` action. You'll need to
+  # log in to Dockerhub first (see the action's docs). Use the `needs:` keyword to make this job depend on the previous two jobs, so it only runs if they pass
+  # — but ONLY on pushes to `main`, and only AFTER build-and-test and lint pass.
+  # See INSTRUCTOR_NOTES.md / the GH docs for the `needs:`, `if:`, and
+  # `permissions: packages: write` pieces you'll need.
+
+  jobs:
+    lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -80,11 +90,3 @@ jobs:
 
       - name: Run Checkstyle
         run: mvn -B checkstyle:check
-      - name: lint test and Run Checkstyle
-        run: mvn -B checkstyle:check
-  # TODO (Task 6 - CD): Add a `docker` job that builds the image from the
-  # provided Dockerfile and pushes it to the Dockerhub registry. Use the `docker/build-push-action` action. You'll need to
-  # log in to Dockerhub first (see the action's docs). Use the `needs:` keyword to make this job depend on the previous two jobs, so it only runs if they pass
-  # — but ONLY on pushes to `main`, and only AFTER build-and-test and lint pass.
-  # See INSTRUCTOR_NOTES.md / the GH docs for the `needs:`, `if:`, and
-  # `permissions: packages: write` pieces you'll need.
