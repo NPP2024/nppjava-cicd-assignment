@@ -46,7 +46,10 @@ jobs:
       # tests ran (and which failed) without digging through logs. Upload
       # target/surefire-reports as a build artifact. Make sure this step still
       # runs even when the tests fail (Hint: `if: always()`).
-
+      - name: Publish to GitHub Packages Apache Maven
+        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        env:
+         GITHUB_TOKEN: ${{ github.token }}
       # TODO (Task 4): Enforce a code-coverage gate. Uncomment the JaCoCo
       # "coverage-check" execution in pom.xml, then confirm `mvn verify` fails
       # when coverage is below the threshold. (Try deleting a test to see it
