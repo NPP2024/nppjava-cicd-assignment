@@ -8,7 +8,7 @@
 #  Tip: commit small and often. Watch the "Actions" tab after each push.
 # =============================================================================
 
-name: CI
+name: CICD project NPP
 
 # TODO (Task 1): This workflow only triggers on pushes to `main`. Add a trigger
 # so it ALSO runs on pull requests targeting `main`. CI that doesn't run on PRs
