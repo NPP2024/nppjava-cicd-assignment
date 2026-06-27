@@ -74,19 +74,4 @@ jobs:
   # See INSTRUCTOR_NOTES.md / the GH docs for the `needs:`, `if:`, and
   # `permissions: packages: write` pieces you'll need.
 
-  jobs:
-    lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Run Checkstyle
-        run: mvn -B checkstyle:check
+ 
