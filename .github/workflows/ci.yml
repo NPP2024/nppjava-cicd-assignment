@@ -65,6 +65,21 @@ jobs:
       # TODO (Task 5): Add a SEPARATE job called `lint` that runs Checkstyle with
       # `mvn -B checkstyle:check`. Keeping lint in its own job means style problems
       # and test failures show up as distinct signals.
+         lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Run Checkstyle
+        run: mvn -B checkstyle:check
       - name: lint test and Run Checkstyle
         run: mvn -B checkstyle:check
   # TODO (Task 6 - CD): Add a `docker` job that builds the image from the
