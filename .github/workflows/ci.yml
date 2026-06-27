@@ -16,7 +16,8 @@ name: CICD project NPP
 on:
   push:
     branches: [ master ]
-
+  pull_request:
+    branches: [ "master" ]
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
