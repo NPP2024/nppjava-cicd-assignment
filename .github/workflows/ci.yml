@@ -66,7 +66,7 @@ jobs:
       # `mvn -B checkstyle:check`. Keeping lint in its own job means style problems
       # and test failures show up as distinct signals.
        lint:
-        - name: Run Checkstyle
+        - name: Run Checkstyle.
           run: mvn -B checkstyle:check
   # TODO (Task 6 - CD): Add a `docker` job that builds the image from the
   # provided Dockerfile and pushes it to the Dockerhub registry. Use the `docker/build-push-action` action. You'll need to
