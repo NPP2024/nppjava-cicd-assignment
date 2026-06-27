@@ -59,8 +59,9 @@ jobs:
       # TODO (Task 4): Enforce a code-coverage gate. Uncomment the JaCoCo
       # "coverage-check" execution in pom.xml, then confirm `mvn verify` fails
       # when coverage is below the threshold. (Try deleting a test to see it
-      # break, then restore it.)
-
+      # break, then restore it.)'
+      - name: Verify build and coverage
+        run: mvn verify
   # TODO (Task 5): Add a SEPARATE job called `lint` that runs Checkstyle with
   # `mvn -B checkstyle:check`. Keeping lint in its own job means style problems
   # and test failures show up as distinct signals.
