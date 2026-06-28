@@ -19,7 +19,9 @@ on:
   pull_request:
     branches: [ "master" ]
 jobs:
-  build-and-test:
+  my_first_job:
+        name: My first job
+    build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -66,7 +68,25 @@ jobs:
       # `mvn -B checkstyle:check`. Keeping lint in its own job means style problems
       # and test failures show up as distinct signals.
       - name: lint test and Run Checkstyle
+        run: mvn -B checkstyle:check  
+  my_second_job:
+      name: My second job
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Run Checkstyle
         run: mvn -B checkstyle:check
+
   # TODO (Task 6 - CD): Add a `docker` job that builds the image from the
   # provided Dockerfile and pushes it to the Dockerhub registry. Use the `docker/build-push-action` action. You'll need to
   # log in to Dockerhub first (see the action's docs). Use the `needs:` keyword to make this job depend on the previous two jobs, so it only runs if they pass
