@@ -77,3 +77,10 @@ jobs:
   # - Builds and pushes the Docker image to Docker Hub
   # - Uses docker/build-push-action
   # - Logs in to Docker Hub using GitHub secrets
+      - name: Build and Push Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+                image: npp2024/samplenodejs
+                registry: docker.io
+                username: ${{ secrets.DOCKER_USERNAME }}
+                password: ${{ secrets.DOCKER_PASSWORD }}
