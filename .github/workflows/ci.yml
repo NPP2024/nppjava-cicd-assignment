@@ -80,7 +80,8 @@ jobs:
   Docker:
     runs-on: ubuntu-latest
     steps:
-  
+      - name: Check out code 
+        uses: actions/checkout@v4
       - name: Build and Push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
