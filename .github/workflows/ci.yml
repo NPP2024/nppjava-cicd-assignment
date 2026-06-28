@@ -77,6 +77,10 @@ jobs:
   # - Builds and pushes the Docker image to Docker Hub
   # - Uses docker/build-push-action
   # - Logs in to Docker Hub using GitHub secrets
+  Docker:
+    runs-on: ubuntu-latest
+    steps:
+  
       - name: Build and Push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
