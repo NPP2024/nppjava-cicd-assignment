@@ -1,3 +1,4 @@
+
 # =============================================================================
 #  STUDENT STARTER WORKFLOW
 #
@@ -10,17 +11,20 @@
 
 name: CICD project NPP
 
-# TODO (Task 1): This workflow only triggers on pushes to `main`. Add a trigger
-# so it ALSO runs on pull requests targeting `main`. CI that doesn't run on PRs
-# can't protect the main branch.
+# TODO (Task 1): Run on pushes and pull requests.
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
+
 jobs:
-    build-and-test:
+  build-and-test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -31,63 +35,45 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
 
-      
-          # TODO (Task 2): Enable built-in Maven dependency caching here so the
-          # job doesn't re-download the world on every run. (Hint: setup-java
-          # supports a `cache:` input.)
-
+      # TODO (Task 2): Enable Maven dependency caching.
       - name: Build and run tests
         run: mvn -B verify
 
-      # TODO (Task 3): Publish the JUnit test results so reviewers can see which
-      # tests ran (and which failed) without digging through logs. Upload
-      # target/surefire-reports as a build artifact. Make sure this step still
-      # runs even when the tests fail (Hint: `if: always()`).
-      - name: Build and run tests
-        run: mvn test
-
-      # Publish JUnit test reports even if tests fail
+      # TODO (Task 3): Publish JUnit test reports.
       - name: Upload JUnit test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: junit-test-results
           path: target/surefire-reports/
-      # TODO (Task 4): Enforce a code-coverage gate. Uncomment the JaCoCo
-      # "coverage-check" execution in pom.xml, then confirm `mvn verify` fails
-      # when coverage is below the threshold. (Try deleting a test to see it
-      # break, then restore it.)'
+
+      # TODO (Task 4): Enforce JaCoCo coverage checks.
       - name: Verify build and coverage
         run: mvn verify
-      # TODO (Task 5): Add a SEPARATE job called `lint` that runs Checkstyle with
-      # `mvn -B checkstyle:check`. Keeping lint in its own job means style problems
-      # and test failures show up as distinct signals.
-      - name: lint test and Run Checkstyle
-        run: mvn -B checkstyle:check  
-   lint:
-        runs-on: ubuntu-latest
-    
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v4
-    
-          - name: Set up JDK
-            uses: actions/setup-java@v4
-            with:
-              distribution: temurin
-              java-version: '17'
-    
-          - name: Run Checkstyle
-            run: mvn -B checkstyle:check
 
-  # TODO (Task 6 - CD): Add a `docker` job that builds the image from the
-  # provided Dockerfile and pushes it to the Dockerhub registry. Use the `docker/build-push-action` action. You'll need to
-  # log in to Dockerhub first (see the action's docs). Use the `needs:` keyword to make this job depend on the previous two jobs, so it only runs if they pass
-  # — but ONLY on pushes to `main`, and only AFTER build-and-test and lint pass.
-  # See INSTRUCTOR_NOTES.md / the GH docs for the `needs:`, `if:`, and
-  # `permissions: packages: write` pieces you'll need.
+  # TODO (Task 5): Run Checkstyle in a separate job.
+  lint:
+    runs-on: ubuntu-latest
 
- 
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Run Checkstyle
+        run: mvn -B checkstyle:check
+
+  # TODO (Task 6 - CD):
+  # Add a docker job that:
+  # - Depends on build-and-test and lint
+  # - Runs only on pushes to master
+  # - Builds and pushes the Docker image to Docker Hub
+  # - Uses docker/build-push-action
+  # - Logs in to Docker Hub using GitHub secrets
